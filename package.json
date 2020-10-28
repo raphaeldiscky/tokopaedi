@@ -1,0 +1,23 @@
+{
+  "name": "ecommerce",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server/server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raphaeldiscky/e-commerce-app.git"
+  },
+  "author": "Raphael Discky",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/raphaeldiscky/e-commerce-app/issues"
+  },
+  "homepage": "https://github.com/raphaeldiscky/e-commerce-app#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
