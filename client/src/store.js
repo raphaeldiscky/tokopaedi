@@ -5,13 +5,21 @@ import {
   productListReducer,
   productDetailsReducer
 } from './reducers/productReducers';
+import { cartReducer } from './reducers/cartReducers';
 
 const reducer = combineReducers({
   productList: productListReducer,
-  productDetails: productDetailsReducer
+  productDetails: productDetailsReducer,
+  cart: cartReducer
 });
 
-const initialState = {};
+const cartItemsFromStorage = localStorage.getItem('cartItems')
+  ? JSON.parse(localStorage.getItem('cartItems'))
+  : [];
+
+const initialState = {
+  cart: { cartItems: cartItemsFromStorage }
+}; // token, cart
 
 // when dispatch an action to redux store it should be a plain text not a function
 // but in a real scenario, we need to dispatch a function to do some logics
