@@ -16,6 +16,14 @@ h2 {
   padding: 0.5rem 0;
 }
 
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
 .rating span {
   margin: 0.1rem;
 }

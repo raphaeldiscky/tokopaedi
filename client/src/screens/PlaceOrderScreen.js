@@ -61,6 +61,7 @@ const PlaceOrderScreen = ({ history }) => {
               <h2>Shipping</h2>
               <p>
                 <strong>Address: </strong>
+                <br />
                 {cart.shippingAddress.address}, {cart.shippingAddress.city},{' '}
                 {cart.shippingAddress.postalCode},{' '}
                 {cart.shippingAddress.country}
