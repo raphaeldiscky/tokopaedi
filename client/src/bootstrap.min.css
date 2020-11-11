@@ -9657,3 +9657,11 @@ a.text-dark:hover {
 .list-group-item-action .list-group-item-heading {
   color: #fff;
 }
+
+.modal-header {
+  border-bottom: 0 none;
+}
+
+.modal-footer {
+  border-top: 0 none;
+}
