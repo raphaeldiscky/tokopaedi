@@ -9665,3 +9665,9 @@ a.text-dark:hover {
 .modal-footer {
   border-top: 0 none;
 }
+
+.btn:focus,
+.btn:active {
+  outline: none !important;
+  box-shadow: none;
+}
