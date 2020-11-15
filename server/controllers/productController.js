@@ -44,8 +44,8 @@ const addProduct = asyncHandler(async (req, res) => {
     name: 'Sample name',
     price: 0,
     user: req.user._id,
-    image: '/image/sample.jpg',
-    brand: 'Sample brand',
+    image: '/images/not-found-img.jpg',
+    manufacturer: 'Sample manufacturer',
     category: 'Sample category',
     countInStock: 0,
     numReviews: 0,
@@ -65,7 +65,7 @@ const updateProductById = asyncHandler(async (req, res) => {
     price,
     description,
     image,
-    brand,
+    manufacturer,
     category,
     countInStock
   } = req.body;
@@ -77,7 +77,7 @@ const updateProductById = asyncHandler(async (req, res) => {
     product.price = price;
     product.description = description;
     product.image = image;
-    product.brand = brand;
+    product.manufacturer = manufacturer;
     product.category = category;
     product.countInStock = countInStock;
 

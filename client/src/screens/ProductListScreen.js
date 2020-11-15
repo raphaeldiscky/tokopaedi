@@ -4,7 +4,12 @@ import { Table, Button, Modal, Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { listProducts, deleteProduct } from '../actions/productActions';
+import {
+  listProducts,
+  deleteProduct,
+  addProduct
+} from '../actions/productActions';
+import { PRODUCT_ADD_RESET } from '../constants/productConstants';
 
 const ProductListScreen = ({ history, match }) => {
   const dispatch = useDispatch();
@@ -24,23 +29,37 @@ const ProductListScreen = ({ history, match }) => {
     success: successDelete
   } = productDelete;
 
+  const productAdd = useSelector((state) => state.productAdd);
+  const {
+    loading: loadingAdd,
+    error: errorAdd,
+    success: successAdd,
+    product: addedProduct
+  } = productAdd;
+
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
   useEffect(() => {
-    if (userInfo && userInfo.isAdmin) {
-      dispatch(listProducts());
-    } else {
+    dispatch({ type: PRODUCT_ADD_RESET });
+    if (!userInfo.isAdmin) {
       history.push('/login');
     }
-  }, [dispatch, history, userInfo, successDelete]);
+    if (successAdd) {
+      history.push(`/admin/product/${addedProduct._id}/edit`);
+    } else {
+      dispatch(listProducts());
+    }
+  }, [dispatch, history, userInfo, successDelete, successAdd, addedProduct]);
 
   const deleteHandler = (id) => {
     dispatch(deleteProduct(id));
     setShow(false);
   };
 
-  const addProductHandler = (product) => {};
+  const addProductHandler = () => {
+    dispatch(addProduct());
+  };
 
   return (
     <>
@@ -56,6 +75,8 @@ const ProductListScreen = ({ history, match }) => {
       </Row>
       {loadingDelete && <loader />}
       {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
+      {loadingAdd && <loader />}
+      {errorAdd && <Message variant='danger'>{errorAdd}</Message>}
       {loading ? (
         <Loader />
       ) : error ? (
@@ -79,7 +100,7 @@ const ProductListScreen = ({ history, match }) => {
                 <td>{product.name}</td>
                 <td>${product.price}</td>
                 <td>{product.category}</td>
-                <td>{product.brand}</td>
+                <td>{product.manufacturer}</td>
                 <td>
                   <LinkContainer to={`/admin/product/${product._id}/edit`}>
                     <Button variant='light' className='btn-sm'>
