@@ -21,11 +21,11 @@ import {
 import axios from 'axios';
 
 // below function is action creator:
-export const listProducts = () => async (dispatch) => {
+export const listProducts = (keyword = '') => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST });
 
-    const { data } = await axios.get('/api/products'); // res.data
+    const { data } = await axios.get(`/api/products?keyword=${keyword}`); // res.data
     dispatch({
       type: PRODUCT_LIST_SUCCESS,
       payload: data
