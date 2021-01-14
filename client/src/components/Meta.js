@@ -12,7 +12,7 @@ const Meta = ({ title, description, keywords }) => {
 };
 
 Meta.defaultProps = {
-  title: 'Buy To Survive',
+  title: 'Tokopaedi',
   description: 'We sell the best weapons in universe',
   keywords: 'GUN, GUN, GUN'
 };
