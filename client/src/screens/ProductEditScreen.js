@@ -1,87 +1,87 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import { Form, Button } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import Message from '../components/Message';
-import Loader from '../components/Loader';
-import FormContainer from '../components/FormContainer';
-import { listProductDetails, updateProduct } from '../actions/productActions';
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import { Link } from 'react-router-dom'
+import { Form, Button } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
+import Message from '../components/Message'
+import Loader from '../components/Loader'
+import FormContainer from '../components/FormContainer'
+import { listProductDetails, updateProduct } from '../actions/productActions'
 import {
   PRODUCT_UPDATE_RESET,
   PRODUCT_DETAILS_RESET
-} from '../constants/productConstants';
+} from '../constants/productConstants'
 
 const ProductEditScreen = ({ match, history }) => {
-  const productId = match.params.id; // id from URL
+  const productId = match.params.id // id from URL
 
-  const [name, setName] = useState('');
-  const [price, setPrice] = useState(9);
-  const [image, setImage] = useState('');
-  const [manufacturer, setManufacturer] = useState('');
-  const [category, setCategory] = useState('');
-  const [countInStock, setCountInStock] = useState(0);
-  const [description, setDescription] = useState('');
-  const [uploading, setUploading] = useState(false);
+  const [name, setName] = useState('')
+  const [price, setPrice] = useState(9)
+  const [image, setImage] = useState('')
+  const [manufacturer, setManufacturer] = useState('')
+  const [category, setCategory] = useState('')
+  const [countInStock, setCountInStock] = useState(0)
+  const [description, setDescription] = useState('')
+  const [uploading, setUploading] = useState(false)
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
 
-  const productDetails = useSelector((state) => state.productDetails);
-  const { loading, error, product } = productDetails;
+  const productDetails = useSelector((state) => state.productDetails)
+  const { loading, error, product } = productDetails
 
-  const productUpdate = useSelector((state) => state.productUpdate);
+  const productUpdate = useSelector((state) => state.productUpdate)
   const {
     loading: loadingUpdate,
     error: errorUpdate,
     success: successUpdate
-  } = productUpdate;
+  } = productUpdate
 
   useEffect(() => {
     if (successUpdate) {
-      dispatch({ type: PRODUCT_UPDATE_RESET });
-      dispatch({ type: PRODUCT_DETAILS_RESET });
-      history.push('/admin/productlist');
+      dispatch({ type: PRODUCT_UPDATE_RESET })
+      dispatch({ type: PRODUCT_DETAILS_RESET })
+      history.push('/admin/productlist')
     } else {
       if (!product.name || product._id !== productId) {
-        dispatch(listProductDetails(productId));
+        dispatch(listProductDetails(productId))
       } else {
-        setName(product.name);
-        setPrice(product.price);
-        setImage(product.image);
-        setManufacturer(product.manufacturer);
-        setCategory(product.category);
-        setCountInStock(product.countInStock);
-        setDescription(product.description);
+        setName(product.name)
+        setPrice(product.price)
+        setImage(product.image)
+        setManufacturer(product.manufacturer)
+        setCategory(product.category)
+        setCountInStock(product.countInStock)
+        setDescription(product.description)
       }
     }
-  }, [dispatch, productId, product, history, successUpdate]);
+  }, [dispatch, productId, product, history, successUpdate])
 
   const uploadFileHandler = async (e) => {
-    const file = e.target.files[0];
-    const formData = new FormData();
-    formData.append('image', file);
-    setUploading(true);
+    const file = e.target.files[0]
+    const formData = new FormData()
+    formData.append('image', file)
+    setUploading(true)
     try {
       const config = {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,
           'Content-Type': 'multipart/form-data'
         }
-      };
-      const { data } = await axios.post('/api/upload', formData, config);
-      setImage(data);
-      setUploading(false);
+      }
+      const { data } = await axios.post('/api/upload', formData, config)
+      setImage(data)
+      setUploading(false)
     } catch (error) {
-      console.error(error);
-      setUploading(false);
+      console.error(error)
+      setUploading(false)
     }
-  };
+  }
 
   const submitHandler = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     dispatch(
       updateProduct({
         _id: productId,
@@ -93,8 +93,8 @@ const ProductEditScreen = ({ match, history }) => {
         countInStock,
         description
       })
-    );
-  };
+    )
+  }
 
   return (
     <>
@@ -195,7 +195,7 @@ const ProductEditScreen = ({ match, history }) => {
         )}
       </FormContainer>
     </>
-  );
-};
+  )
+}
 
-export default ProductEditScreen;
+export default ProductEditScreen

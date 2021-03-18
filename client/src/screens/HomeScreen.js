@@ -1,28 +1,28 @@
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Col, Row } from 'react-bootstrap';
-import Product from '../components/Product';
-import { useDispatch, useSelector } from 'react-redux';
-import { listProducts } from '../actions/productActions';
-import Message from '../components/Message';
-import Loader from '../components/Loader';
-import Paginate from '../components/Paginate';
-import ProductCarousel from '../components/ProductCarousel';
-import Meta from '../components/Meta';
+import React, { useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { Col, Row } from 'react-bootstrap'
+import Product from '../components/Product'
+import { useDispatch, useSelector } from 'react-redux'
+import { listProducts } from '../actions/productActions'
+import Message from '../components/Message'
+import Loader from '../components/Loader'
+import Paginate from '../components/Paginate'
+import ProductCarousel from '../components/ProductCarousel'
+import Meta from '../components/Meta'
 
 const HomeScreen = ({ match }) => {
-  const keyword = match.params.keyword;
-  const pageNumber = match.params.pageNumber || 1;
+  const keyword = match.params.keyword
+  const pageNumber = match.params.pageNumber || 1
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   // display productList with useSelector to grab from the state, useSelector == mapStateToProps
-  const productList = useSelector((state) => state.productList); // productList from store
-  const { loading, error, products, page, pages } = productList;
+  const productList = useSelector((state) => state.productList) // productList from store
+  const { loading, error, products, page, pages } = productList
 
   useEffect(() => {
-    dispatch(listProducts(keyword, pageNumber));
-  }, [dispatch, keyword, pageNumber]);
+    dispatch(listProducts(keyword, pageNumber))
+  }, [dispatch, keyword, pageNumber])
 
   return (
     <>
@@ -56,7 +56,7 @@ const HomeScreen = ({ match }) => {
         </>
       )}
     </>
-  );
-};
+  )
+}
 
-export default HomeScreen;
+export default HomeScreen

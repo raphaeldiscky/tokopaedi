@@ -1,57 +1,57 @@
-import React, { useEffect, useState } from 'react';
-import { LinkContainer } from 'react-router-bootstrap';
-import { Table, Button, Modal, Row, Col } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import Message from '../components/Message';
-import Loader from '../components/Loader';
-import Paginate from '../components/Paginate';
+import React, { useEffect, useState } from 'react'
+import { LinkContainer } from 'react-router-bootstrap'
+import { Table, Button, Modal, Row, Col } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
+import Message from '../components/Message'
+import Loader from '../components/Loader'
+import Paginate from '../components/Paginate'
 import {
   listProducts,
   deleteProduct,
   addProduct
-} from '../actions/productActions';
-import { PRODUCT_ADD_RESET } from '../constants/productConstants';
+} from '../actions/productActions'
+import { PRODUCT_ADD_RESET } from '../constants/productConstants'
 
 const ProductListScreen = ({ history, match }) => {
-  const pageNumber = match.params.pageNumber || 1;
+  const pageNumber = match.params.pageNumber || 1
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false)
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false)
+  const handleShow = () => setShow(true)
 
-  const productList = useSelector((state) => state.productList);
-  const { loading, error, products, pages, page } = productList;
+  const productList = useSelector((state) => state.productList)
+  const { loading, error, products, pages, page } = productList
 
-  const productDelete = useSelector((state) => state.productDelete);
+  const productDelete = useSelector((state) => state.productDelete)
   const {
     loading: loadingDelete,
     error: errorDelete,
     success: successDelete
-  } = productDelete;
+  } = productDelete
 
-  const productAdd = useSelector((state) => state.productAdd);
+  const productAdd = useSelector((state) => state.productAdd)
   const {
     loading: loadingAdd,
     error: errorAdd,
     success: successAdd,
     product: addedProduct
-  } = productAdd;
+  } = productAdd
 
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
 
   useEffect(() => {
-    dispatch({ type: PRODUCT_ADD_RESET });
+    dispatch({ type: PRODUCT_ADD_RESET })
     if (!userInfo.isAdmin) {
-      history.push('/login');
+      history.push('/login')
     }
     if (successAdd) {
-      history.push(`/admin/product/${addedProduct._id}/edit`);
+      history.push(`/admin/product/${addedProduct._id}/edit`)
     } else {
-      dispatch(listProducts('', pageNumber));
+      dispatch(listProducts('', pageNumber))
     }
   }, [
     dispatch,
@@ -61,16 +61,16 @@ const ProductListScreen = ({ history, match }) => {
     successAdd,
     addedProduct,
     pageNumber
-  ]);
+  ])
 
   const deleteHandler = (id) => {
-    dispatch(deleteProduct(id));
-    setShow(false);
-  };
+    dispatch(deleteProduct(id))
+    setShow(false)
+  }
 
   const addProductHandler = () => {
-    dispatch(addProduct());
-  };
+    dispatch(addProduct())
+  }
 
   return (
     <>
@@ -154,7 +154,7 @@ const ProductListScreen = ({ history, match }) => {
         </>
       )}
     </>
-  );
-};
+  )
+}
 
-export default ProductListScreen;
+export default ProductListScreen
