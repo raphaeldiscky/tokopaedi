@@ -9,8 +9,8 @@ import {
   listProducts,
   deleteProduct,
   addProduct
-} from '../actions/productActions'
-import { PRODUCT_ADD_RESET } from '../constants/productConstants'
+} from '../store/actions/productActions'
+import { PRODUCT_ADD_RESET } from '../store/constants/productConstants'
 
 const ProductListScreen = ({ history, match }) => {
   const pageNumber = match.params.pageNumber || 1

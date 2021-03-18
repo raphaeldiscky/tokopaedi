@@ -9,10 +9,9 @@ import Meta from '../components/Meta'
 import {
   listProductDetails,
   createProductReview
-} from '../actions/productActions'
-import { addToCart } from '../actions/cartActions'
-import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
-
+} from '../store/actions/productActions'
+import { addToCart } from '../store/actions/cartActions'
+import { PRODUCT_CREATE_REVIEW_RESET } from '../store/constants/productConstants'
 const ProductScreen = ({ match, history }) => {
   const [qty, setQty] = useState(1)
   const [rating, setRating] = useState(0)

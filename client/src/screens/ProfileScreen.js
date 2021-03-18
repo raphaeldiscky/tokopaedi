@@ -3,9 +3,9 @@ import { Form, Button, Row, Col, Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { getUserDetails, updateUserProfile } from '../actions/userActions'
-import { listMyOrders } from '../actions/orderAction'
-import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
+import { getUserDetails, updateUserProfile } from '../store/actions/userActions'
+import { listMyOrders } from '../store/actions/orderAction'
+import { USER_UPDATE_PROFILE_RESET } from '../store/constants/userConstants'
 import { LinkContainer } from 'react-router-bootstrap'
 
 const ProfileScreen = ({ location, history }) => {

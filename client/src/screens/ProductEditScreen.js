@@ -6,11 +6,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
-import { listProductDetails, updateProduct } from '../actions/productActions'
+import {
+  listProductDetails,
+  updateProduct
+} from '../store/actions/productActions'
 import {
   PRODUCT_UPDATE_RESET,
   PRODUCT_DETAILS_RESET
-} from '../constants/productConstants'
+} from '../store/constants/productConstants'
 
 const ProductEditScreen = ({ match, history }) => {
   const productId = match.params.id // id from URL
