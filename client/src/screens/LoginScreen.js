@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
-import { login } from '../store/actions/userActions'
+import { login, getGoogleUserInfo } from '../store/actions/userActions'
 
 const LoginScreen = ({ location, history }) => {
   const [email, setEmail] = useState('')
@@ -24,9 +24,23 @@ const LoginScreen = ({ location, history }) => {
     }
   }, [history, userInfo, redirect])
 
+  useEffect(() => {
+    if (!userInfo) {
+      dispatch(getGoogleUserInfo())
+    }
+    // eslint-disable-next-line
+  }, [])
+
   const submitHandler = (e) => {
     e.preventDefault()
     dispatch(login(email, password))
+  }
+
+  const signInWithGoogleHandler = (e) => {
+    e.preventDefault()
+    window.location.href = `/api/auth/google?redirect=${redirect}`
+    // window.open(`http://localhost:5000/api/auth/google`)
+    // window.open(`http://localhost:5000/api/auth/google`)
   }
 
   return (
@@ -54,8 +68,15 @@ const LoginScreen = ({ location, history }) => {
             onChange={(e) => setPassword(e.target.value)}
           ></Form.Control>
         </Form.Group>
-        <Button type='submit' variant='primary'>
+        <Button type='submit' variant='primary' style={{ marginRight: '5px' }}>
           Sign In
+        </Button>
+        <Button
+          type='submit'
+          variant='danger'
+          onClick={signInWithGoogleHandler}
+        >
+          <i className='fab fa-google left'> Sign In With Google</i>
         </Button>
       </Form>
       <Row className='py-3'>

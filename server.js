@@ -1,16 +1,20 @@
-import path from 'path'
-import express from 'express'
-import dotenv from 'dotenv'
-import morgan from 'morgan'
-import connectDB from './config/db.js'
-import { notFound, errorHandler } from './middleware/errorMiddleware.js'
-
-import productRoutes from './routes/productRoutes.js'
-import userRoutes from './routes/userRoutes.js'
-import orderRoutes from './routes/orderRoutes.js'
-import uploadRoutes from './routes/uploadRoutes.js'
-
+const dotenv = require('dotenv')
 dotenv.config()
+const path = require('path')
+const express = require('express')
+const morgan = require('morgan')
+const session = require('express-session')
+const { notFound, errorHandler } = require('./middleware/errorMiddleware')
+
+const productRoutes = require('./routes/productRoutes')
+const userRoutes = require('./routes/userRoutes')
+const orderRoutes = require('./routes/orderRoutes')
+const uploadRoutes = require('./routes/uploadRoutes')
+const authRoutes = require('./routes/authRoutes')
+
+const passport = require('./config/passport')
+const connectDB = require('./config/db')
+
 connectDB()
 
 const app = express()
@@ -21,16 +25,28 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use(express.json()) // accept json data in the body
 
+// session
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false
+  })
+)
+// passport middleware
+app.use(passport.initialize())
+app.use(passport.session())
+
 app.use('/api/products', productRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/orders', orderRoutes)
 app.use('/api/upload', uploadRoutes)
+app.use('/api/auth', authRoutes)
 
 app.get('/api/config/paypal', (req, res) =>
   res.send(process.env.PAYPAL_CLIENT_ID)
 )
 
-const __dirname = path.resolve() // for ES module
 app.use('/uploads', express.static(path.join(__dirname, '/uploads'))) // make upload folder static
 
 if (process.env.NODE_ENV === 'production') {

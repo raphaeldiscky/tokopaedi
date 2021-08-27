@@ -1,7 +1,7 @@
-import path from 'path'
-import express from 'express'
-import multer from 'multer'
-import { admin, protect } from '../middleware/authMiddleware.js'
+const path = require('path')
+const express = require('express')
+const multer = require('multer')
+const { admin, protect } = require('../middleware/authMiddleware')
 const router = express.Router()
 
 const storage = multer.diskStorage({
@@ -39,4 +39,4 @@ router.post('/', protect, admin, upload.single('image'), (req, res) => {
   res.send(`/${req.file.path.replace('\\', '/')}`)
 })
 
-export default router
+module.exports = router
